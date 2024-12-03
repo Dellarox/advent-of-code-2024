@@ -1,6 +1,7 @@
 package main
 
 import (
+	"advent-of-code-2024/utilities"
 	"fmt"
 	"io/ioutil"
 	"math"
@@ -9,22 +10,16 @@ import (
 	"strings"
 )
 
-func check(e error) {
-	if e != nil {
-		panic(e)
-	}
-}
-
 func main() {
 	dat, err := ioutil.ReadFile("inputs/day1.txt")
-	check(err)
+	utilities.Check(err)
 	dataStr := string(dat)
 	dataArr := strings.Fields(dataStr)
 	var leftArr []int
 	var rightArr []int
 	for index, value := range dataArr {
 		valueInt, errAtoi := strconv.Atoi(value)
-		check(errAtoi)
+		utilities.Check(errAtoi)
 		if index%2 == 0 {
 			leftArr = append(leftArr, valueInt)
 		} else {
