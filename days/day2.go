@@ -33,33 +33,6 @@ func removeElemFromSlice(slice []int, s int) []int {
 	return append(slice[:s], slice[s+1:]...)
 }
 
-func isSafeWithLevelDampener(report []int) bool {
-	isIncreasing := true
-	isDecreasing := true
-
-	for i := 1; i < len(report); i++ {
-		difference := math.Abs(float64(report[i] - report[i-1]))
-		if difference > 3 {
-			return false
-		}
-		if difference < 1 {
-			report = removeElemFromSlice(report, i)
-			return isSafe(report)
-		}
-		if report[i] > report[i-1] {
-			isDecreasing = false
-		}
-		if report[i] < report[i-1] {
-			isIncreasing = false
-		}
-		if !isIncreasing && !isDecreasing {
-			report = removeElemFromSlice(report, i)
-			return isSafe(report)
-		}
-	}
-	return isIncreasing || isDecreasing
-}
-
 func convertStringArrToIntArr(strArr []string) []int {
 	var intArr []int
 	for _, elem := range strArr {
@@ -71,7 +44,7 @@ func convertStringArrToIntArr(strArr []string) []int {
 }
 
 func main() {
-	file, err := os.Open("inputs/day2test.txt")
+	file, err := os.Open("inputs/day2.txt")
 	utilities.Check(err)
 	scanner := bufio.NewScanner(file)
 	var fullDataArr [][]string
@@ -80,18 +53,27 @@ func main() {
 		fullDataArr = append(fullDataArr, lineArr)
 	}
 	var countTrues1 int
-	var countTrues2 int
 	for _, report := range fullDataArr {
 		intReport := convertStringArrToIntArr(report)
 		safeStatement := isSafe(intReport)
 		if safeStatement {
 			countTrues1++
 		}
-		safeStatement = isSafeWithLevelDampener(intReport)
-		if safeStatement {
-			countTrues2++
+	}
+
+	var countTrues2 int
+	for _, report := range fullDataArr {
+		for i := range len(report) {
+			intReport := convertStringArrToIntArr(report)
+			intReport = removeElemFromSlice(intReport, i)
+			safeStatement := isSafe(intReport)
+			if safeStatement {
+				countTrues2++
+				break
+			}
 		}
 	}
+
 	fmt.Println(countTrues1)
 	fmt.Println(countTrues2)
 }
