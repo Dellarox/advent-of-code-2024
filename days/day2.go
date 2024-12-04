@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"strconv"
 	"strings"
 )
 
@@ -33,16 +32,6 @@ func removeElemFromSlice(slice []int, s int) []int {
 	return append(slice[:s], slice[s+1:]...)
 }
 
-func convertStringArrToIntArr(strArr []string) []int {
-	var intArr []int
-	for _, elem := range strArr {
-		intElem, err := strconv.Atoi(elem)
-		utilities.Check(err)
-		intArr = append(intArr, intElem)
-	}
-	return intArr
-}
-
 func main() {
 	file, err := os.Open("inputs/day2.txt")
 	utilities.Check(err)
@@ -54,7 +43,7 @@ func main() {
 	}
 	var countTrues1 int
 	for _, report := range fullDataArr {
-		intReport := convertStringArrToIntArr(report)
+		intReport := utilities.ConvertStringArrToIntArr(report)
 		safeStatement := isSafe(intReport)
 		if safeStatement {
 			countTrues1++
@@ -64,7 +53,7 @@ func main() {
 	var countTrues2 int
 	for _, report := range fullDataArr {
 		for i := range len(report) {
-			intReport := convertStringArrToIntArr(report)
+			intReport := utilities.ConvertStringArrToIntArr(report)
 			intReport = removeElemFromSlice(intReport, i)
 			safeStatement := isSafe(intReport)
 			if safeStatement {
