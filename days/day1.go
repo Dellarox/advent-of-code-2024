@@ -3,7 +3,6 @@ package main
 import (
 	"advent-of-code-2024/utilities"
 	"fmt"
-	"io/ioutil"
 	"math"
 	"sort"
 	"strconv"
@@ -11,9 +10,7 @@ import (
 )
 
 func main() {
-	dat, err := ioutil.ReadFile("inputs/day1.txt")
-	utilities.Check(err)
-	dataStr := string(dat)
+	dataStr := utilities.ReadFromFileAsOneString("inputs/day1.txt")
 	dataArr := strings.Fields(dataStr)
 	var leftArr []int
 	var rightArr []int

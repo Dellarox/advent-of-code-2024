@@ -2,11 +2,8 @@ package main
 
 import (
 	"advent-of-code-2024/utilities"
-	"bufio"
 	"fmt"
 	"math"
-	"os"
-	"strings"
 )
 
 func isSafe(report []int) bool {
@@ -33,14 +30,7 @@ func removeElemFromSlice(slice []int, s int) []int {
 }
 
 func main() {
-	file, err := os.Open("inputs/day2.txt")
-	utilities.Check(err)
-	scanner := bufio.NewScanner(file)
-	var fullDataArr [][]string
-	for scanner.Scan() {
-		lineArr := strings.Fields(scanner.Text())
-		fullDataArr = append(fullDataArr, lineArr)
-	}
+	fullDataArr := utilities.ReadFromFileLineByLine("inputs/day2.txt")
 	var countTrues1 int
 	for _, report := range fullDataArr {
 		intReport := utilities.ConvertStringArrToIntArr(report)

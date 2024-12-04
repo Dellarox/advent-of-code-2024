@@ -1,6 +1,12 @@
 package utilities
 
-import "strconv"
+import (
+	"bufio"
+	"io/ioutil"
+	"os"
+	"strconv"
+	"strings"
+)
 
 func Check(e error) {
 	if e != nil {
@@ -16,4 +22,22 @@ func ConvertStringArrToIntArr(strArr []string) []int {
 		intArr = append(intArr, intElem)
 	}
 	return intArr
+}
+
+func ReadFromFileAsOneString(filePath string) string {
+	dat, err := ioutil.ReadFile(filePath)
+	Check(err)
+	return string(dat)
+}
+
+func ReadFromFileLineByLine(filePath string) [][]string {
+	file, err := os.Open(filePath)
+	Check(err)
+	scanner := bufio.NewScanner(file)
+	var fullDataArr [][]string
+	for scanner.Scan() {
+		lineArr := strings.Fields(scanner.Text())
+		fullDataArr = append(fullDataArr, lineArr)
+	}
+	return fullDataArr
 }

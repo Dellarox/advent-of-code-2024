@@ -3,14 +3,11 @@ package main
 import (
 	"advent-of-code-2024/utilities"
 	"fmt"
-	"io/ioutil"
 	"regexp"
 )
 
 func main() {
-	dat, err := ioutil.ReadFile("inputs/day3.txt")
-	utilities.Check(err)
-	dataStr := string(dat)
+	dataStr := utilities.ReadFromFileAsOneString("inputs/day3.txt")
 
 	r, _ := regexp.Compile(`mul\([0-9]{1,3},[0-9]{1,3}\)`)
 	multiplicationsArr := r.FindAllString(dataStr, -1)
